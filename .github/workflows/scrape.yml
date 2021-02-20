@@ -1,0 +1,30 @@
+# reference: https://github.com/tigger0jk/ark-invest-scraper/blob/main/.github/workflows/scrape.yml
+# but this repo only takes the latest, while we want the snapshots in different partitions
+
+name: Scrape snapshot data
+
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    # just in case, I didn't study their update frequency, so let's run it 4 times a day
+    # to be precise, it will run at: 0030, 0630, 1230, 1830
+    - cron:  '30 0,6,12,18 * * *'
+
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out this repo
+      uses: actions/checkout@v2
+    - name: Fetch the latest data
+      run: |-
+        ./script.sh
+    - name: Commit and push if it changed
+      run: |-
+        git config user.name "Automated"
+        git config user.email "actions@users.noreply.github.com"
+        git add -A
+        timestamp=$(date -u)
+        git commit -m "Latest update: ${timestamp}" || exit 0
+        git push

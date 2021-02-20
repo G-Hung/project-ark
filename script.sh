@@ -3,7 +3,6 @@ files=("ARK_INNOVATION_ETF_ARKK_HOLDINGS" "ARK_AUTONOMOUS_TECHNOLOGY_&_ROBOTICS_
 # initialize the tmp subfolder
 mkdir -p data/tmp
 cd data
-rm tmp/*
 
 # for each file, extract, clean and move to corresponding position
 # https://stackoverflow.com/questions/428109/extract-substring-in-bash
@@ -13,7 +12,7 @@ for file in ${files[@]}; do
   code=$(echo $file| rev | cut -d'_' -f 2 | rev)
   echo $code
   # download csv from ark-funds.com and remove the last 4 lines
-  curl https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tail -r | sed '1,4d' | tail -r > tmp/$code.csv
+  curl https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tac | sed '1,4d' | tac > tmp/$code.csv
   # date format conversion, eg: 2/19/2021 to 2021-02-09
   # Go to row 2 col 1 [aka first date], extract year month day component
   year=$(awk "NR==2" tmp/$code.csv | cut -d',' -f 1 | cut -d'/' -f 3 | awk '{printf "%04d\n", $0;}')
