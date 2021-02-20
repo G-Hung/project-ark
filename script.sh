@@ -3,7 +3,6 @@ files=("ARK_INNOVATION_ETF_ARKK_HOLDINGS" "ARK_AUTONOMOUS_TECHNOLOGY_&_ROBOTICS_
 # initialize the tmp subfolder
 mkdir -p data/tmp
 cd data
-rm tmp/*
 
 # for each file, extract, clean and move to corresponding position
 # https://stackoverflow.com/questions/428109/extract-substring-in-bash
