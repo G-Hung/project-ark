@@ -1,0 +1,40 @@
+[
+    {
+        "name": "date",
+        "type": "DATE",
+        "mode": "REQUIRED"
+    },
+    {
+        "name": "fund",
+        "type": "STRING",
+        "mode": "REQUIRED"
+    },
+    {
+        "name": "company",
+        "type": "STRING",
+        "mode": "REQUIRED"
+    },
+    {
+        "name": "ticker",
+        "type": "STRING"
+    },
+    {
+        "name": "cusip",
+        "type": "STRING"
+    },
+    {
+        "name": "shares",
+        "type": "FLOAT",
+        "mode": "REQUIRED"
+    },
+    {
+        "name": "market_value",
+        "type": "FLOAT",
+        "mode": "REQUIRED"
+    },
+    {
+        "name": "weight",
+        "type": "FLOAT",
+        "mode": "REQUIRED"
+    }
+]
