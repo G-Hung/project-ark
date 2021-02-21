@@ -7,9 +7,9 @@ on:
   push:
   workflow_dispatch:
   schedule:
-    # just in case, I didn't study their update frequency, so let's run it 4 times a day
-    # to be precise, it will run at: 0030, 0630, 1230, 1830
-    - cron:  '30 0,6,12,18 * * *'
+    # just in case, I didn't study their update frequency, so let's run it 3 times a day
+    # to be precise, it will run at: 0030, 0830, 1630
+    - cron:  '30 0,8,16 * * *'
 
 jobs:
   scheduled:
