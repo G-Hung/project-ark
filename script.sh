@@ -14,20 +14,24 @@ for file in ${files[@]}; do
 
   # download csv from ark-funds.com and remove the last 4 lines
   # For Linux
-  curl https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tac | sed '1,4d' | tac > tmp/$code.csv
+  # curl https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tac | sed '1,4d' | tac > tmp/$code.csv
   # For Mac
-  # curl https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tail -r | sed '1,4d' | tail -r > tmp/$code.csv
+  curl https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tail -r | sed '1,4d' | tail -r > tmp/$code.csv
 
   # date format conversion, eg: 2/19/2021 to 2021-02-09
   # Go to row 2 col 1 [aka first date], extract year month day component
   year=$(awk "NR==2" tmp/$code.csv | cut -d',' -f 1 | cut -d'/' -f 3 | awk '{printf "%04d\n", $0;}')
   month=$(awk "NR==2" tmp/$code.csv | cut -d',' -f 1 | cut -d'/' -f 1 | awk '{printf "%02d\n", $0;}')
   day=$(awk "NR==2" tmp/$code.csv | cut -d',' -f 1 | cut -d'/' -f 2 | awk '{printf "%02d\n", $0;}')
-
   date=$year-$month-$day
   echo "partition: "$date
   pwd
   mkdir -p $date
-  mv tmp/$code.csv $date/$code.csv
-
+  # replace first col of csv of formatted date, because direct load to BQ requires YYYY-MM-DD format
+  # https://stackoverflow.com/questions/59548775/bigquery-fails-on-parsing-dates-in-m-d-yyyy-format-from-csv-file
+  # https://stackoverflow.com/questions/22003995/replacing-first-column-csv-with-variable
+  awk -v dt="$date" 'BEGIN{FS=OFS=","}{$1=dt}1' tmp/$code.csv > $date/$code.csv
+  python3 ../bq_load.py --date $date --file $code.csv
 done
+
+rm tmp/*
