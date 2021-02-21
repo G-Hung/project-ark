@@ -14,9 +14,9 @@ for file in ${files[@]}; do
 
   # download csv from ark-funds.com and remove the last 4 lines
   # For Linux
-  # curl https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tac | sed '1,4d' | tac > tmp/$code.csv
+  curl https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tac | sed '1,4d' | tac > tmp/$code.csv
   # For Mac
-  curl https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tail -r | sed '1,4d' | tail -r > tmp/$code.csv
+  # curl https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tail -r | sed '1,4d' | tail -r > tmp/$code.csv
 
   # date format conversion, eg: 2/19/2021 to 2021-02-09
   # Go to row 2 col 1 [aka first date], extract year month day component
