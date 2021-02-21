@@ -25,14 +25,14 @@ jobs:
         export_default_credentials: true
     - name: Fetch the latest data
       run: |-
-        python -m pip install --upgrade pip
+        python -m pip install --upgrade pip --quiet
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         ./script.sh
     - name: Commit and push if it changed
       run: |-
         git config user.name "Automated"
         git config user.email "actions@users.noreply.github.com"
-        git add -A
+        git add data
         timestamp=$(date -u)
         git commit -m "Latest update: ${timestamp}" || exit 0
         git push
