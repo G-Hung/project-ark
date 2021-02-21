@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: raw # when we use {{ source(->'schema'<-, 'table') }}
+    dataset: raw # dataset name in BigQuery
+    tables:
+      - name: test # when we use {{ source('schema', ->'table'<-) }}
+        columns:
+          - name: date
+            tests:
+              - not_null
+          - name: fund
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ["ARKF", "ARKG", "ARKK", "ARKQ", "ARKW", "IZRL", "PRNT"]
+          - name: company
+            tests:
+              - not_null
+          - name: shares
+            tests:
+              - not_null
+          - name: market_value
+            tests:
+              - not_null
+          - name: weight
+            tests:
+              - not_null
