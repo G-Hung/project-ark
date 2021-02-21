@@ -36,9 +36,6 @@ jobs:
         python -m pip install --upgrade pip --quiet
         if [ -f requirements.txt ]; then pip install -r requirements.txt --quiet; fi
         ./script.sh
-
-    - name: Run dbt test
-      run: |-
         dbt --version
         dbt debug
         dbt test
