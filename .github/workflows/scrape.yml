@@ -20,6 +20,9 @@ env:
 jobs:
   scheduled:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7]
     steps:
     - name: Check out this repo
       uses: actions/checkout@v2
@@ -30,11 +33,19 @@ jobs:
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         export_default_credentials: true
-  
+      
+    - name: Set Up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt --quiet; fi
+   
     - name: Fetch the latest data and push to Bigquery
       run: |-
-        python -m pip install --upgrade pip --quiet
-        if [ -f requirements.txt ]; then pip install -r requirements.txt --quiet; fi
         ./script.sh
         dbt --version
         dbt debug
