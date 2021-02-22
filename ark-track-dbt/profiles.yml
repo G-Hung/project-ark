@@ -1,13 +1,13 @@
 ark_track: # this needs to match the profile: in your dbt_project.yml file
-target: dev
-outputs:
-  dev:
-    type: bigquery
-    method: service-account
-    keyfile: ${{ secrets.GCP_SA_KEY }} # replace this with the full path to your keyfile
-    project: ${{ env_var('DBT_GOOGLE_PROJECT') }} # Replace this with your project id
-    dataset: ${{ env_var('DBT_GOOGLE_BIGQUERY_DATASET') }} # Replace this with dbt_your_name, e.g. dbt_bob
-    threads: 4 
-    timeout_seconds: 300
-    location: US
-    priority: interactive
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      keyfile: ${{ secrets.GCP_SA_KEY }} # replace this with the full path to your keyfile
+      project: ${{ env_var('DBT_GOOGLE_PROJECT') }} # Replace this with your project id
+      dataset: ${{ env_var('DBT_GOOGLE_BIGQUERY_DATASET') }} # Replace this with dbt_your_name, e.g. dbt_bob
+      threads: 4 
+      timeout_seconds: 300
+      location: US
+      priority: interactive
