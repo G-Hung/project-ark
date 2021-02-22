@@ -46,9 +46,10 @@ jobs:
    
     - name: Fetch the latest data and push to Bigquery
       run: |-
-        ./script.sh
-        ls
+        # ./script.sh
         cd ark-track-dbt
+        pwd
+        ls
         dbt --version
         dbt debug
         dbt test
