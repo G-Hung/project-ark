@@ -52,6 +52,8 @@ dbt test
 
 :exclamation::exclamation::exclamation: But you cannot fork and run because you don't have my credentials to access my BigQuery, to learn more about dbt, https://docs.getdbt.com/tutorial/setting-up/
 
+Below is the capscreen
+
 ![plot](./docs/dbt_test.png)
 
 ## :construction:Code structure
@@ -85,11 +87,15 @@ ark-scrape
 ```
 
 
-## :books:Lesson learned
+## :books:Lessons learned
 
 #### Secrets are exposed by GitHub Actions!?!? <-spoiler: don't panic, it is my problem
 When I tried to use GitHub Actions to push the data to GCP BigQuery, one accident made me super panic! My Google Service Account json was committed to my repo despite I stored it in my GitHub Secrets! I literally shared all the credentials to everyone who can read the repo!:scream: WTF is going on!?!? 
 
+:exclamation::exclamation::exclamation: ***Don't attempt to check my commits, I have disabled the old key already***:exclamation::exclamation::exclamation: 
+
+![plot](./docs/key_leak.png)
+![plot](./docs/key_leak_2.png)
 1. My first guess was I copied the plain JSON to GitHub Secrets and somehow it leaks during the progress?🤔
 
 2. Hmmm I rmb people said the key should be base64, ok, let me try it by using `cat key.json | base64`, and then copy that to GitHub Secrets. But GitHub Actions still created a commit to show all my secrets........:weary:
@@ -98,7 +104,9 @@ When I tried to use GitHub Actions to push the data to GCP BigQuery, one acciden
 
 4. At last, my solution is: change `git add -A` to `git add data` 🧠  My guess is, GitHub Actions somehow create a file for secrets access, normally we will not know the file name because it is randomly generated. BUT they may not expect some people have a step to git push all the files, including the secrets!!!
 
-5. The reason why I used `git add -A` is, I literally copied it from other repo, it is nice for their cases because they don't use Google Cloud and need to handle the credentials, a big lesson that we should be specific about everything, don't apply actions to ALL without really knowing all the consequences! :neutral_face:
+![plot](./docs/key_leak_3.png)
+
+5. The reason why I used `git add -A` is, I literally copied it from other repo, it is nice for their cases because they don't use Google Cloud and need to handle the credentials, a big lesson is that we should be specific about everything, don't apply actions to ALL without really knowing all the consequences! :neutral_face:
 
 BTW, to decode base64, simply run: `cat encoded_secret | base64 -d`
 
