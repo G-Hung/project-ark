@@ -45,7 +45,6 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt --quiet; fi
    
     - name: Fetch the latest data and push to Bigquery
-      # - run: ./script.sh
       - run: cd ark-track-dbt; dbt --version
       - run: 'echo "$KEYFILE" > ./.gcloud/dbt-service-account.json'
         shell: bash
