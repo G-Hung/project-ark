@@ -45,13 +45,11 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt --quiet; fi
    
     - name: Fetch the latest data and push to Bigquery
-      - run: cd ark-track-dbt; dbt --version
-      - run: 'echo "$KEYFILE" > ./.gcloud/dbt-service-account.json'
-        shell: bash
-        env:
-          KEYFILE: ${{ secrets.GCP_SA_KEY }}
-      - run: dbt debug
-      - run: dbt test
+      run: |
+        cd ark-track-dbt; dbt --version
+        echo ${{ secrets.GCP_SA_KEY }} > ./.gcloud/dbt-service-account.json
+        dbt debug
+        dbt test
 
     - name: Commit and push if it changed
       run: |-
