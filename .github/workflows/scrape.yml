@@ -15,7 +15,7 @@ env:
   DBT_PROFILES_DIR: ./
   DBT_GOOGLE_PROJECT: ark-track
   DBT_GOOGLE_BIGQUERY_DATASET: raw
-  # DBT_GOOGLE_BIGQUERY_KEYFILE: ./.gcloud/dbt-service-account.json
+  DBT_GOOGLE_BIGQUERY_KEYFILE: ./.gcloud/dbt-service-account.json
 
 jobs:
   scheduled:
@@ -45,14 +45,14 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt --quiet; fi
    
     - name: Fetch the latest data and push to Bigquery
-      run: |-
-        # ./script.sh
-        cd ark-track-dbt
-        pwd
-        ls
-        dbt --version
-        dbt debug
-        dbt test
+      # - run: ./script.sh
+      - run: cd ark-track-dbt; dbt --version
+      - run: 'echo "$KEYFILE" > ./.gcloud/dbt-service-account.json'
+        shell: bash
+        env:
+          KEYFILE: ${{ secrets.GCP_SA_KEY }}
+      - run: dbt debug
+      - run: dbt test
 
     - name: Commit and push if it changed
       run: |-
