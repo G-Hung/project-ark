@@ -1,3 +1,9 @@
+#!/bin/bash
+
+# script that extract and transform the data from ARK fund for listed funds
+# Then load use `bq_load.py` to load the data to BigQuery
+
+# list of funds that we track
 files=("ARK_INNOVATION_ETF_ARKK_HOLDINGS" "ARK_AUTONOMOUS_TECHNOLOGY_&_ROBOTICS_ETF_ARKQ_HOLDINGS" "ARK_NEXT_GENERATION_INTERNET_ETF_ARKW_HOLDINGS" "ARK_GENOMIC_REVOLUTION_MULTISECTOR_ETF_ARKG_HOLDINGS" "ARK_FINTECH_INNOVATION_ETF_ARKF_HOLDINGS" "THE_3D_PRINTING_ETF_PRNT_HOLDINGS" "ARK_ISRAEL_INNOVATIVE_TECHNOLOGY_ETF_IZRL_HOLDINGS")
 
 # initialize the tmp subfolder
@@ -12,7 +18,7 @@ for file in ${files[@]}; do
   code=$(echo $file| rev | cut -d'_' -f 2 | rev)
   echo $code
 
-  # download csv from ark-funds.com and remove the last 4 lines
+  # download csv from ark-funds.com and remove the last 4 lines <- The last 4 rows of original csv contain some disclaimer, not the data
   # For Linux
   curl https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tac | sed '1,4d' | tac > tmp/$code.csv
   # For Mac
@@ -25,13 +31,13 @@ for file in ${files[@]}; do
   day=$(awk "NR==2" tmp/$code.csv | cut -d',' -f 1 | cut -d'/' -f 2 | awk '{printf "%02d\n", $0;}')
   date=$year-$month-$day
   echo "partition: "$date
-  pwd
   mkdir -p $date
   # replace first col of csv of formatted date, because direct load to BQ requires YYYY-MM-DD format
   # https://stackoverflow.com/questions/59548775/bigquery-fails-on-parsing-dates-in-m-d-yyyy-format-from-csv-file
   # https://stackoverflow.com/questions/22003995/replacing-first-column-csv-with-variable
   awk -v dt="$date" 'BEGIN{FS=OFS=","}{$1=dt}1' tmp/$code.csv > $date/$code.csv
-  python3 ../bq_load.py --date $date --file $code.csv
+  pwd
+  python3 ../scripts/bq_load.py --date $date --file $code.csv
 done
 
 rm tmp/*

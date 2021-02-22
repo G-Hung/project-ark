@@ -1,4 +1,13 @@
+#!/usr/bin/env
+
 """
+Helper scripts to load the data inside `data` folder to BigQuery
+For idempotent property, we first remove the data of specific partition and fund before we load data there
+This is direct local load to BigQuery, definitely not the best practice
+
+For bigger data, we should probably move that to GCS before load to BQ. But the data size for this project is small
+Direct load is fine and easier
+
 Usage:
     python3 bq_load.py --date 2021-02-19 --file ARKF.csv
 
@@ -8,6 +17,8 @@ Usage:
 
 from google.cloud import bigquery
 import argparse
+
+FUND_CODE_TO_UPLOAD = ["ARKF", "ARKG", "ARKK", "ARKQ", "ARKW", "IZRL", "PRNT"] 
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--date", "-d", help="file date YYYY-MM-DD, eg: 2021-02-19, match with date in data")
@@ -25,7 +36,7 @@ if args.date:
 if args.file:
     file_name = args.file
     code, file_format = file_name.split(".")
-    assert code in ["ARKF", "ARKG", "ARKK", "ARKQ", "ARKW", "IZRL", "PRNT"]
+    assert code in FUND_CODE_TO_UPLOAD
     assert file_format=="csv"
 
 # Construct a BigQuery client object.
