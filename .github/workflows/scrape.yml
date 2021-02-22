@@ -52,7 +52,7 @@ jobs:
     - name: Fetch the latest data and push to Bigquery
       run: |
         cd ark-track-dbt
-        head -1 ./dbt-service-account.json
+        head -3 ./dbt-service-account.json
         pwd; ls
         dbt --version
         dbt debug
