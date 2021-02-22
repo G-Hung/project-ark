@@ -40,20 +40,21 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Install dependencies
+    - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt --quiet; fi
 
-    - run: 'cd ark-track-dbt; echo "$KEYFILE" | base64 -d > ./dbt-service-account.json'
+    - name: Create credential file for dbt profile
+      run: 'cd ark-track-dbt; echo "$KEYFILE" | base64 -d > ./dbt-service-account.json'
       shell: bash
       env:
         KEYFILE: ${{ secrets.GCP_SA_KEY }}
 
-    - name: Fetch the latest data and push to Bigquery
+    - name: Fetch the latest data, push to Bigquery, run dbt test
       run: |
+        ./scripts/collect_and_load.sh
         cd ark-track-dbt
-        dbt debug
         dbt test
 
     - name: Commit and push if it changed
