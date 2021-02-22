@@ -1,7 +1,7 @@
 # reference: https://github.com/tigger0jk/ark-invest-scraper/blob/main/.github/workflows/scrape.yml
 # but this repo only takes the latest, while we want the snapshots in different partitions
 
-name: Scrape snapshot data
+name: Scrape snapshot ARK data
 
 on:
   push:
@@ -11,6 +11,7 @@ on:
     # to be precise, it will run at: 0030, 0830, 1630
     - cron:  '30 0,8,16 * * *'
 
+# these paths assume we are in folder `ark-track-dbt`
 env:
   DBT_PROFILES_DIR: ./
   DBT_GOOGLE_PROJECT: ark-track
@@ -19,7 +20,7 @@ env:
 
 jobs:
   scheduled:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     strategy:
       matrix:
         python-version: [3.7]
@@ -44,7 +45,7 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt --quiet; fi
 
-    - run: 'cd ark-track-dbt; echo "$KEYFILE" > ./dbt-service-account.json; pwd; ls -l ./dbt-service-account.json'
+    - run: 'cd ark-track-dbt; echo "$KEYFILE" | base64 -d > ./dbt-service-account.json'
       shell: bash
       env:
         KEYFILE: ${{ secrets.GCP_SA_KEY }}
@@ -52,8 +53,6 @@ jobs:
     - name: Fetch the latest data and push to Bigquery
       run: |
         cd ark-track-dbt
-        pwd; ls
-        dbt --version
         dbt debug
         dbt test
 
