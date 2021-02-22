@@ -37,7 +37,7 @@ for file in ${files[@]}; do
   # https://stackoverflow.com/questions/22003995/replacing-first-column-csv-with-variable
   awk -v dt="$date" 'BEGIN{FS=OFS=","}{$1=dt}1' tmp/$code.csv > $date/$code.csv
   pwd
-  python3 scripts/bq_load.py --date $date --file $code.csv
+  python3 ../scripts/bq_load.py --date $date --file $code.csv
 done
 
 rm tmp/*
