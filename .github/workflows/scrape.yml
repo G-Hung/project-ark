@@ -44,14 +44,13 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt --quiet; fi
 
-    - run: 'echo "$KEYFILE" > ./dbt-service-account.json'
+    - run: 'cd ark-track-dbt; echo "$KEYFILE" > ./dbt-service-account.json'
       shell: bash
       env:
         KEYFILE: ${{ secrets.GCP_SA_KEY }}
 
     - name: Fetch the latest data and push to Bigquery
       run: |
-        cd ark-track-dbt
         dbt --version
         dbt debug
         dbt test
