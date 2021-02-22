@@ -12,7 +12,7 @@ on:
     - cron:  '30 0,8,16 * * *'
 
 env:
-  DBT_PROFILES_DIR: ./ark-track-dbt
+  DBT_PROFILES_DIR: ./ark-track-dbt/
   DBT_GOOGLE_PROJECT: ark-track
   DBT_GOOGLE_BIGQUERY_DATASET: raw
   # DBT_GOOGLE_BIGQUERY_KEYFILE: ./.gcloud/dbt-service-account.json
