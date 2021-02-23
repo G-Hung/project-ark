@@ -1,4 +1,4 @@
-2021-02-22,fund,company,ticker,cusip,shares,"market value($)",weight(%)
+date,fund,company,ticker,cusip,shares,"market value($)",weight(%)
 2021-02-22,ARKK,"TESLA INC",TSLA,88160R101,3409650.00,2436194925.00,9.13
 2021-02-22,ARKK,"ROKU INC",ROKU,77543R102,4036263.00,1764977084.64,6.61
 2021-02-22,ARKK,"SQUARE INC - A",SQ,852234103,5206826.00,1395845914.08,5.23
