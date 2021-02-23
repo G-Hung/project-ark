@@ -35,7 +35,7 @@ for file in ${files[@]}; do
   # replace first col of csv of formatted date, because direct load to BQ requires YYYY-MM-DD format
   # https://stackoverflow.com/questions/59548775/bigquery-fails-on-parsing-dates-in-m-d-yyyy-format-from-csv-file
   # https://stackoverflow.com/questions/22003995/replacing-first-column-csv-with-variable
-  awk -v dt="$date" 'BEGIN{FS=OFS=","}{$1=dt}1' tmp/$code.csv | sed '1s/$date/date/' > $date/$code.csv
+  awk -v dt="$date" 'BEGIN{FS=OFS=","}{$1=dt}1' tmp/$code.csv | sed "1s/$date/date/" > $date/$code.csv
   pwd
   python3 ../scripts/bq_load.py --date $date --file $code.csv
 done
