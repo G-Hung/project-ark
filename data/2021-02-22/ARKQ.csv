@@ -1,4 +1,4 @@
-2021-02-22,fund,company,ticker,cusip,shares,"market value($)",weight(%)
+date,fund,company,ticker,cusip,shares,"market value($)",weight(%)
 2021-02-22,ARKQ,"TESLA INC",TSLA,88160R101,552578.00,394816981.00,9.70
 2021-02-22,ARKQ,"BAIDU INC - SPON ADR",BIDU,056752108,703676.00,236287364.04,5.81
 2021-02-22,ARKQ,"DEERE & CO",DE,244199105,565591.00,190892618.41,4.69

@@ -1,4 +1,4 @@
-2021-02-22,fund,company,ticker,cusip,shares,"market value($)",weight(%)
+date,fund,company,ticker,cusip,shares,"market value($)",weight(%)
 2021-02-22,IZRL,"GILAT SATELLITE NETWORKS LTD",GILT,M51474118,651300.00,9860682.00,2.54
 2021-02-22,IZRL,"PERION NETWORK LTD",PERI,M78673114,449105.00,9745578.50,2.51
 2021-02-22,IZRL,"E & M COMPUTING",EMCO,6302216,1205990.00,9211949.27,2.37

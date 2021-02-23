@@ -1,4 +1,4 @@
-2021-02-22,fund,company,ticker,cusip,shares,"market value($)",weight(%)
+date,fund,company,ticker,cusip,shares,"market value($)",weight(%)
 2021-02-22,ARKW,"TESLA INC",TSLA,88160R101,1084257.00,774701626.50,8.47
 2021-02-22,ARKW,"GRAYSCALE BITCOIN TRUST BTC",GBTC,389637109,8871962.00,474649967.00,5.19
 2021-02-22,ARKW,"SQUARE INC - A",SQ,852234103,1492280.00,400050422.40,4.37

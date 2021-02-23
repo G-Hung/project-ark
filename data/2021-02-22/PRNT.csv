@@ -1,4 +1,4 @@
-2021-02-22,fund,company,ticker,cusip,shares,"market value($)",weight(%)
+date,fund,company,ticker,cusip,shares,"market value($)",weight(%)
 2021-02-22,PRNT,"EXONE CO/THE",XONE,302104104,1730853.00,77576831.46,11.33
 2021-02-22,PRNT,"3D SYSTEMS CORP",DDD,88554D205,970686.00,39167180.10,5.72
 2021-02-22,PRNT,"STRATASYS LTD",SSYS,M85548101,837026.00,33723777.54,4.93
