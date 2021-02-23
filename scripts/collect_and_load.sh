@@ -18,11 +18,11 @@ for file in ${files[@]}; do
   code=$(echo $file| rev | cut -d'_' -f 2 | rev)
   echo $code
 
-  # download csv from ark-funds.com and remove the last 4 lines <- The last 4 rows of original csv contain some disclaimer, not the data
+  # download csv from ark-funds.com and remove the last 4 lines <- The last 3 rows of original csv contain some text, not the data
   # For Linux
-  curl https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tac | sed '1,4d' | tac > tmp/$code.csv
+  curl https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tac | sed '1,3d' | tac > tmp/$code.csv
   # For Mac
-  # curl https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tail -r | sed '1,4d' | tail -r > tmp/$code.csv
+  # curl https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tail -r | sed '1,3d' | tail -r > tmp/$code.csv
 
   # date format conversion, eg: 2/19/2021 to 2021-02-09
   # Go to row 2 col 1 [aka first date], extract year month day component
@@ -35,7 +35,7 @@ for file in ${files[@]}; do
   # replace first col of csv of formatted date, because direct load to BQ requires YYYY-MM-DD format
   # https://stackoverflow.com/questions/59548775/bigquery-fails-on-parsing-dates-in-m-d-yyyy-format-from-csv-file
   # https://stackoverflow.com/questions/22003995/replacing-first-column-csv-with-variable
-  awk -v dt="$date" 'BEGIN{FS=OFS=","}{$1=dt}1' tmp/$code.csv > $date/$code.csv
+  awk -v dt="$date" 'BEGIN{FS=OFS=","}{$1=dt}1' tmp/$code.csv | sed '1s/$date/date/' > $date/$code.csv
   pwd
   python3 ../scripts/bq_load.py --date $date --file $code.csv
 done
