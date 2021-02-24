@@ -12,6 +12,9 @@ But I am more curious about the **CHANGES**, for example:
 
 To see the current snapshot is easy, just go to their site! But to see the changes and have more analyses based on the current snapshot alone is more challenging. So, this project exists :grin:
 
+Also write up a medium post for this repo:
+https://medium.com/@geoffreyhung/from-curl-to-automated-workflow-d79c7c108450
+
 ## :muscle:Project plans
 
 1. **[Extract]** Scraping script to extract and clean the snapshot from site daily using `GitHub Actions` **[DONE]**
@@ -29,6 +32,8 @@ At 0030, 0830, 1630 daily,
 2. The workflow will then download csv data from ARK site and store in `data` folder
 3. The script will push the data to defined BigQuery table
 4. The script will run `dbt test` to check data quality
+
+![plot](./docs/high_level_flow.png)
 
 ##### Data extraction and cleaning
 In `scripts/collect_and_load.sh`, it will get the csv data from https://ark-funds.com/wp-content/fundsiteliterature
@@ -58,7 +63,7 @@ Below is the capscreen
 
 ## :construction:Code structure
 ```
-ark-scrape
+project-ark
 ├── README.md               # we are here~
 ├── ark-track-dbt           # store dbt project
 │   ├── README.md
