@@ -57,11 +57,12 @@ jobs:
         cd ark-track-dbt
         dbt test
 
-    - name: Commit and push if it changed
-      run: |-
-        git config user.name "Automated"
-        git config user.email "actions@users.noreply.github.com"
-        git add data
-        timestamp=$(date -u)
-        git commit -m "Latest update: ${timestamp}" || exit 0
-        git push
+    # Stop pushing the data to repo, cap the repo size
+    # - name: Commit and push if it changed
+    #   run: |-
+    #     git config user.name "Automated"
+    #     git config user.email "actions@users.noreply.github.com"
+    #     git add data
+    #     timestamp=$(date -u)
+    #     git commit -m "Latest update: ${timestamp}" || exit 0
+    #     git push
