@@ -20,7 +20,7 @@ for file in ${files[@]}; do
 
   # download csv from ark-funds.com and remove the last 4 lines <- The last 3 rows of original csv contain some text, not the data
   # For Linux
-  curl https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tac | sed '1,3d' | tac > tmp/$code.csv
+  curl -A "Mozilla/5.0" https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tac | sed '1,3d' | tac > tmp/$code.csv
   # For Mac
   # curl https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tail -r | sed '1,3d' | tail -r > tmp/$code.csv
 
