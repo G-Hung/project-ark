@@ -2,7 +2,7 @@
 
 # helper script to load data to BQ
 dates=$(ls ../data)
-codes=("ARKF" "ARFG" "ARKK" "ARKQ" "ARKW" "IZRL" "PRNT")
+codes=("ARKF" "ARFG" "ARKK" "ARKQ" "ARKW" "IZRL" "PRNT" "ARKX")
 
 for date in ${dates[@]}; do
   for code in ${codes[@]}; do
