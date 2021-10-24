@@ -31,11 +31,6 @@ for file in ${files[@]}; do
   day=$(awk "NR==2" tmp/$code.csv | cut -d',' -f 1 | cut -d'/' -f 2 | awk '{printf "%02d\n", $0;}')
   date=$year-$month-$day
 
-  # exit and alert
-  if ["$year" -eq "0000"]; then
-    exit
-  fi
-
   echo "partition: "$date
   mkdir -p $date
   # replace first col of csv of formatted date, because direct load to BQ requires YYYY-MM-DD format
