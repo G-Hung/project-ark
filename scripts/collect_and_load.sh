@@ -4,7 +4,7 @@
 # Then load use `bq_load.py` to load the data to BigQuery
 
 # list of funds that we track
-files=("ARK_INNOVATION_ETF_ARKK_HOLDINGS" "ARK_AUTONOMOUS_TECHNOLOGY_&_ROBOTICS_ETF_ARKQ_HOLDINGS" "ARK_NEXT_GENERATION_INTERNET_ETF_ARKW_HOLDINGS" "ARK_GENOMIC_REVOLUTION_MULTISECTOR_ETF_ARKG_HOLDINGS" "ARK_FINTECH_INNOVATION_ETF_ARKF_HOLDINGS" "THE_3D_PRINTING_ETF_PRNT_HOLDINGS" "ARK_ISRAEL_INNOVATIVE_TECHNOLOGY_ETF_IZRL_HOLDINGS" "ARK_SPACE_EXPLORATION_&_INNOVATION_ETF_ARKX_HOLDINGS")
+files=("ARK_INNOVATION_ETF_ARKK_HOLDINGS" "ARK_INNOVATION_ETF_ARKQ_HOLDINGS" "ARK_INNOVATION_ETF_ARKW_HOLDINGS" "ARK_INNOVATION_ETF_ARKG_HOLDINGS" "ARK_INNOVATION_ETF_ARKF_HOLDINGS" "ARK_INNOVATION_ETF_PRNT_HOLDINGS" "ARK_INNOVATION_ETF_IZRL_HOLDINGS" "ARK_INNOVATION_ETF_ARKX_HOLDINGS")
 
 # initialize the tmp subfolder
 mkdir -p data/tmp
@@ -22,7 +22,7 @@ for file in ${files[@]}; do
   # For Linux
   curl -A "Mozilla/6.0" https://ark-funds.com/wp-content/uploads/funds-etf-csv/$file.csv | tac | sed '1,3d' | tac > tmp/$code.csv
   # For Mac
-  # curl https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tail -r | sed '1,3d' | tail -r > tmp/$code.csv
+  # curl -A "Mozilla/6.0" https://ark-funds.com/wp-content/uploads/funds-etf-csv/$file.csv | tail -r | sed '1,3d' | tail -r > tmp/$code.csv
 
   # date format conversion, eg: 2/19/2021 to 2021-02-09
   # Go to row 2 col 1 [aka first date], extract year month day component
