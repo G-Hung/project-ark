@@ -78,3 +78,18 @@ print(
         table_id, partition_date, code
     )
 )
+
+###########
+# Assert there is data
+###########
+sql_query = """
+SELECT COUNT(1) as cnt
+FROM `{table_id}`
+WHERE date="{partition_date}" and fund="{fund}"
+""".format(table_id=table_id, partition_date=partition_date, fund=code)
+query_job = client.query(sql_query)  # API request
+results = query_job.result()  # Waits for statement to finish
+
+record_cnt = sum([row.count for row in results])
+print(f"There are {record_cnt} records for {code} on {partition_date}")
+assert record_cnt!=0
