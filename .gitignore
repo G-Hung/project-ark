@@ -1,1 +1,3 @@
 secrets/
+ark-track-dbt/dbt-env/
+.DS_Store

@@ -20,7 +20,7 @@ for file in ${files[@]}; do
 
   # download csv from ark-funds.com and remove the last 4 lines <- The last 3 rows of original csv contain some text, not the data
   # For Linux
-  curl -A "Mozilla/6.0" https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tac | sed '1,3d' | tac > tmp/$code.csv
+  curl -A "Mozilla/6.0" https://ark-funds.com/wp-content/uploads/funds-etf-csv/$file.csv | tac | sed '1,3d' | tac > tmp/$code.csv
   # For Mac
   # curl https://ark-funds.com/wp-content/fundsiteliterature/csv/$file.csv | tail -r | sed '1,3d' | tail -r > tmp/$code.csv
 
@@ -30,6 +30,12 @@ for file in ${files[@]}; do
   month=$(awk "NR==2" tmp/$code.csv | cut -d',' -f 1 | cut -d'/' -f 1 | awk '{printf "%02d\n", $0;}')
   day=$(awk "NR==2" tmp/$code.csv | cut -d',' -f 1 | cut -d'/' -f 2 | awk '{printf "%02d\n", $0;}')
   date=$year-$month-$day
+
+  # exit and alert
+  if ["$year" -eq "0000"]; then
+    exit
+  fi
+
   echo "partition: "$date
   mkdir -p $date
   # replace first col of csv of formatted date, because direct load to BQ requires YYYY-MM-DD format
