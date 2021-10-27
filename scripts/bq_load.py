@@ -90,6 +90,6 @@ WHERE date="{partition_date}" and fund="{fund}"
 query_job = client.query(sql_query)  # API request
 results = query_job.result()  # Waits for statement to finish
 
-record_cnt = sum([row.count for row in results])
+record_cnt = sum([row.cnt for row in results])
 print(f"There are {record_cnt} records for {code} on {partition_date}")
 assert record_cnt!=0
