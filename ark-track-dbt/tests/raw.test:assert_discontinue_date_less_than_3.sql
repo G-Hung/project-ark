@@ -5,6 +5,6 @@ WITH base AS (
     FROM {{ source('raw', 'test') }}
 )
 
-SELECT *, CURRENT_DATE()
+SELECT *, CURRENT_DATE('America/Los_Angeles')
 FROM base
-WHERE DATE_DIFF(CURRENT_DATE(), max_date, DAY) > 2
+WHERE DATE_DIFF(CURRENT_DATE('America/Los_Angeles'), max_date, DAY) > 2
