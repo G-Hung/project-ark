@@ -13,7 +13,7 @@ sources:
             tests:
               - not_null
               - accepted_values:
-                  values: ["ARKF", "ARKG", "ARKK", "ARKQ", "ARKW", "IZRL", "PRNT", "ARKX"]
+                  values: ["ARKF", "ARKG", "ARKK", "ARKQ", "ARKW", "IZRL", "PRNT", "ARKX", "CTRU"]
           - name: company
             tests:
               - not_null
