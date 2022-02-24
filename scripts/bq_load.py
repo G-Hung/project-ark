@@ -18,7 +18,7 @@ Usage:
 from google.cloud import bigquery
 import argparse
 
-FUND_CODE_TO_UPLOAD = ["ARKF", "ARKG", "ARKK", "ARKQ", "ARKW", "IZRL", "PRNT", "ARKX"]
+FUND_CODE_TO_UPLOAD = ["ARKF", "ARKG", "ARKK", "ARKQ", "ARKW", "IZRL", "PRNT", "ARKX", "CTRU"]
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--date", "-d", help="file date YYYY-MM-DD, eg: 2021-02-19, match with date in data")
